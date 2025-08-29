@@ -2,6 +2,14 @@ Hello! I'm Bestbot
 What can I do for you?
 added: read book
 added: return book
-1. read book
-2. return book
-Bye. Hope to see you again soon!
+added: buy bread
+Nice! I've marked this task as done:
+  [X] read book
+Here are the tasks in your list:
+1.[X] read book
+2.[ ] return book
+3.[ ] buy bread
+Nice! I've marked this task as done:
+  [X] return book
+OK, I've marked this task as not done yet:
+  [ ] return book
