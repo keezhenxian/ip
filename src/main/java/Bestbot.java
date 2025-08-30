@@ -12,8 +12,9 @@ public class Bestbot {
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }
-            System.out.println(line); // echo
+            System.out.println(line);
         }
     }
 }
+
 
