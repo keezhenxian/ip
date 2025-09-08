@@ -1,17 +1,19 @@
 package bestbot;
 
-/**
- * Represents a task of type "Todo".
- */
+/** Todo task. */
 public class Todo extends Task {
-
-    /**
-     * Creates a new Todo task with the given description.
-     *
-     * @param description Description of the todo task.
-     */
     public Todo(String description) {
         super(description);
+    }
+
+    @Override
+    protected char typeCode() {
+        return 'T';
+    }
+
+    @Override
+    protected String encodeBody() {
+        return description;
     }
 
     @Override
@@ -19,3 +21,4 @@ public class Todo extends Task {
         return "[T]" + super.toString();
     }
 }
+

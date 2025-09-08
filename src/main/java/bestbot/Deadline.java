@@ -1,10 +1,8 @@
 package bestbot;
 
-/**
- * Represents a task with a deadline.
- */
+/** Deadline task with a "by" field (string for Level-7). */
 public class Deadline extends Task {
-    protected final String by;
+    private final String by;
 
     /**
      * Creates a new Deadline task with the given description and deadline.
@@ -17,8 +15,14 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    public String getBy() {
-        return by;
+    @Override
+    protected char typeCode() {
+        return 'D';
+    }
+
+    @Override
+    protected String encodeBody() {
+        return description + " | " + by;
     }
 
     @Override
@@ -26,3 +30,4 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
 }
+

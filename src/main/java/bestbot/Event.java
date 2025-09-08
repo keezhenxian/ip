@@ -20,17 +20,18 @@ public class Event extends Task {
         this.to = to;
     }
 
-    public String getFrom() {
-        return from;
+    @Override
+    protected char typeCode() {
+        return 'E';
     }
 
-    public String getTo() {
-        return to;
+    @Override
+    protected String encodeBody() {
+        return description + " | " + from + " | " + to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString()
-                + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 }
