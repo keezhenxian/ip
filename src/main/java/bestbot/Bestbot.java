@@ -26,23 +26,23 @@ public class Bestbot {
 
     private static void handle(String line) throws BestbotException {
         String[] parts = Parser.splitFirstWord(line);
-        String cmd = parts[0];
+        Command cmd = Command.fromString(parts[0]);
         String args = parts[1];
 
         switch (cmd) {
-            case "bye":
+            case BYE:
                 System.out.println("Bye. Hope to see you again soon!");
                 System.exit(0);
                 return;
-                
-            case "list":
+
+            case LIST:
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < tasks.size(); i++) {
                     System.out.printf("%d.%s%n", i + 1, tasks.get(i));
                 }
                 return;
 
-            case "todo":
+            case TODO:
                 if (args.isBlank()) {
                     throw new BestbotException("The description of a todo cannot be empty.");
                 }
@@ -50,7 +50,7 @@ public class Bestbot {
                 printAddedTask(tasks.get(tasks.size() - 1));
                 return;
 
-            case "deadline":
+            case DEADLINE:
                 if (!args.contains("/by")) {
                     throw new BestbotException("Deadline needs a description and /by <time>.");
                 }
@@ -62,11 +62,10 @@ public class Bestbot {
                 printAddedTask(tasks.get(tasks.size() - 1));
                 return;
 
-            case "event":
+            case EVENT:
                 if (!args.contains("/from") || !args.contains("/to")) {
                     throw new BestbotException("Event needs a description, /from <time>, and /to <time>.");
                 }
-
                 String[] eventParts = args.split("/from", 2);
                 String description = eventParts[0].trim();
                 String[] timeParts = eventParts[1].split("/to", 2);
@@ -79,7 +78,7 @@ public class Bestbot {
                 printAddedTask(tasks.get(tasks.size() - 1));
                 return;
 
-            case "delete":
+            case DELETE:
                 if (args.isBlank()) {
                     throw new BestbotException("Index required for delete.");
                 }
@@ -98,7 +97,7 @@ public class Bestbot {
                 System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 return;
 
-            case "mark":
+            case MARK:
                 if (args.isBlank()) {
                     throw new BestbotException("Please specify which task number to mark.");
                 }
@@ -111,7 +110,7 @@ public class Bestbot {
                 System.out.println("  " + tasks.get(markIndex));
                 return;
 
-            case "unmark":
+            case UNMARK:
                 if (args.isBlank()) {
                     throw new BestbotException("Please specify which task number to unmark.");
                 }
@@ -124,6 +123,7 @@ public class Bestbot {
                 System.out.println("  " + tasks.get(unmarkIndex));
                 return;
 
+            case UNKNOWN:
             default:
                 throw new BestbotException("I'm sorry, but I don't know what that means :-(");
         }

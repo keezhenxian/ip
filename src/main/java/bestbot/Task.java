@@ -4,7 +4,7 @@ package bestbot;
  * Represents a general task in Bestbot.
  */
 public class Task {
-    protected boolean done;
+    protected boolean isDone;
     protected final String description;
 
     /**
@@ -20,14 +20,14 @@ public class Task {
      * Marks this task as done.
      */
     public void markAsDone() {
-        this.done = true;
+        this.isDone = true;
     }
 
     /**
      * Marks this task as not done.
      */
     public void markAsNotDone() {
-        this.done = false;
+        this.isDone = false;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Task {
      * @return "X" if done, otherwise a space.
      */
     public String getStatusIcon() {
-        return done ? "X" : " ";
+        return isDone ? "X" : " ";
     }
 
     @Override
