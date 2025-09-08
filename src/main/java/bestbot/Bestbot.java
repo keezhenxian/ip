@@ -14,6 +14,9 @@ public class Bestbot {
         Scanner sc = new Scanner(System.in);
         System.out.println("Hello! I'm Bestbot");
         System.out.println("What can I do for you?");
+        // Load tasks from storage at startup
+        tasks.addAll(Storage.load());
+
         while (true) {
             String line = sc.nextLine();
             try {
@@ -46,8 +49,10 @@ public class Bestbot {
                 if (args.isBlank()) {
                     throw new BestbotException("The description of a todo cannot be empty.");
                 }
-                tasks.add(new Todo(args));
-                printAddedTask(tasks.get(tasks.size() - 1));
+                Task todo = new Todo(args);
+                tasks.add(todo);
+                printAddedTask(todo);
+                Storage.save(tasks);
                 return;
 
             case DEADLINE:
@@ -58,8 +63,10 @@ public class Bestbot {
                 if (d[0].isBlank() || d[1].isBlank()) {
                     throw new BestbotException("Deadline needs a description and /by <time>.");
                 }
-                tasks.add(new Deadline(d[0].trim(), d[1].trim()));
-                printAddedTask(tasks.get(tasks.size() - 1));
+                Task deadline = new Deadline(d[0].trim(), d[1].trim());
+                tasks.add(deadline);
+                printAddedTask(deadline);
+                Storage.save(tasks);
                 return;
 
             case EVENT:
@@ -74,8 +81,10 @@ public class Bestbot {
                     throw new BestbotException("Event needs a description, /from <time>, and /to <time>.");
                 }
 
-                tasks.add(new Event(description, timeParts[0].trim(), timeParts[1].trim()));
-                printAddedTask(tasks.get(tasks.size() - 1));
+                Task event = new Event(description, timeParts[0].trim(), timeParts[1].trim());
+                tasks.add(event);
+                printAddedTask(event);
+                Storage.save(tasks);
                 return;
 
             case DELETE:
@@ -95,6 +104,7 @@ public class Bestbot {
                 System.out.println("Noted. I've removed this task:");
                 System.out.println("  " + removed);
                 System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                Storage.save(tasks);
                 return;
 
             case MARK:
@@ -108,6 +118,7 @@ public class Bestbot {
                 tasks.get(markIndex).markAsDone();
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("  " + tasks.get(markIndex));
+                Storage.save(tasks);
                 return;
 
             case UNMARK:
@@ -121,6 +132,7 @@ public class Bestbot {
                 tasks.get(unmarkIndex).markAsNotDone();
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println("  " + tasks.get(unmarkIndex));
+                Storage.save(tasks);
                 return;
 
             case UNKNOWN:
@@ -135,3 +147,4 @@ public class Bestbot {
         System.out.printf("Now you have %d tasks in the list.%n", tasks.size());
     }
 }
+
