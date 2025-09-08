@@ -1,24 +1,28 @@
 package bestbot;
 
 /**
- * Represents a task that occurs during a specific time period.
+ * Represents an event task that happens between two times.
  */
 public class Event extends Task {
-    private final String at;
+    private final String from;
+    private final String to;
 
     /**
-     * Creates a new Event task with the given description and time.
+     * Creates an Event with description, start time, and end time.
      *
-     * @param description Description of the event.
-     * @param at Time of the event.
+     * @param description description of the event
+     * @param from start time
+     * @param to end time
      */
-    public Event(String description, String at) {
+    public Event(String description, String from, String to) {
         super(description);
-        this.at = at;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        return "[E]" + super.toString()
+                + " (from: " + from + " to: " + to + ")";
     }
 }
