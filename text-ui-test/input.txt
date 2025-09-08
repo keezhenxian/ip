@@ -1,11 +1,9 @@
-todo read book
-mark 1
-deadline return book /by June 6th
-mark 2
-event project meeting /from Aug 6th 2pm /to 4pm
-todo join sports club
-mark 4
 todo borrow book
+deadline return pen /by 2025-09-10
+event group discussion /from 2025-09-15 /to 2025-09-16
 list
-delete 3
+mark 2
+unmark 2
+delete 1
+list
 bye

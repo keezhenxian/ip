@@ -21,8 +21,17 @@ public class Event extends Task {
     }
 
     @Override
+    protected char typeCode() {
+        return 'E';
+    }
+
+    @Override
+    protected String encodeBody() {
+        return description + " | " + from + " | " + to;
+    }
+
+    @Override
     public String toString() {
-        return "[E]" + super.toString()
-                + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 }
