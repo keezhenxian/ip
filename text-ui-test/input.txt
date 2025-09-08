@@ -1,5 +1,9 @@
-todo borrow book
+todo read book
+deadline submit report /by Sunday
+event meeting /at Mon 2-4pm
+blah
+todo
+deadline report
+event
 list
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
-list
+bye
