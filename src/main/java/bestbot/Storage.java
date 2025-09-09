@@ -1,76 +1,49 @@
 package bestbot;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles saving and loading tasks from a file on disk.
- * Each task is saved in a machine-friendly format that can be parsed later.
+ * Handles saving and loading tasks from a file.
  */
 public class Storage {
-    /** Path to the save file. */
-    private final Path filePath;
+    private final String filePath;
 
-    /**
-     * Creates a Storage object for the given file path.
-     *
-     * @param filePath Path to the save file.
-     */
     public Storage(String filePath) {
-        this.filePath = Path.of(filePath);
+        this.filePath = filePath;
     }
 
     /**
-     * Loads all tasks from the save file.
+     * Loads tasks from the storage file.
      *
      * @return List of tasks.
+     * @throws BestbotException If file cannot be read.
      */
-    public List<Task> load() {
+    public List<Task> load() throws BestbotException {
         List<Task> tasks = new ArrayList<>();
-        if (!Files.exists(filePath)) {
-            return tasks;
-        }
 
-        try {
-            List<String> lines = Files.readAllLines(filePath);
-            for (String line : lines) {
-                String[] parts = line.split(" \\| ");
-                switch (parts[0]) {
-                    case "T":
-                        tasks.add(Todo.fromSaveFormat(parts));
-                        break;
-                    case "D":
-                        tasks.add(Deadline.fromSaveFormat(parts));
-                        break;
-                    case "E":
-                        tasks.add(Event.fromSaveFormat(parts));
-                        break;
-                    default:
-                        System.out.println("Unknown task type: " + parts[0]);
-                }
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                tasks.add(Task.fromSaveFormat(line));
             }
         } catch (IOException e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
+            throw new BestbotException("Error loading tasks from file.");
         }
-
         return tasks;
     }
 
     /**
-     * Saves all tasks to the save file in machine-friendly format.
+     * Saves tasks to the storage file.
      *
      * @param tasks List of tasks to save.
      */
     public void save(List<Task> tasks) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
-                writer.write(task.toSaveFormat());
-                writer.newLine();
+                bw.write(task.toSaveFormat());
+                bw.newLine();
             }
         } catch (IOException e) {
             System.out.println("Error saving tasks: " + e.getMessage());

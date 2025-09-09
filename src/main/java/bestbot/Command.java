@@ -1,34 +1,22 @@
 package bestbot;
 
 /**
- * Represents the set of valid commands for Bestbot.
+ * Abstract representation of a user command.
+ * Each concrete command must implement execute() and isExit().
  */
-public enum Command {
-    BYE,
-    LIST,
-    TODO,
-    DEADLINE,
-    EVENT,
-    MARK,
-    UNMARK,
-    DELETE,
-    UNKNOWN;
+public abstract class Command {
+    /**
+     * Executes the command.
+     *
+     * @param tasks   TaskList to operate on.
+     * @param ui      UI for user interaction.
+     * @param storage Storage handler for persistence.
+     * @throws BestbotException If execution fails due to invalid input or logic errors.
+     */
+    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BestbotException;
 
     /**
-     * Parses a string into a Command enum.
-     * Returns UNKNOWN if the command is not recognized.
+     * Indicates whether this command should exit the program.
      */
-    public static Command fromString(String input) {
-        switch (input.toLowerCase()) {
-            case "bye": return BYE;
-            case "list": return LIST;
-            case "todo": return TODO;
-            case "deadline": return DEADLINE;
-            case "event": return EVENT;
-            case "mark": return MARK;
-            case "unmark": return UNMARK;
-            case "delete": return DELETE;
-            default: return UNKNOWN;
-        }
-    }
+    public abstract boolean isExit();
 }

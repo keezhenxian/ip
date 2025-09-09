@@ -1,26 +1,37 @@
 Hello! I'm Bestbot
 What can I do for you?
+____________________________________________________________
 Got it. I've added this task:
-  [T][ ] borrow book
+  [T][ ] read book
 Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return pen (by: Sep 10 2025)
+  [D][ ] return book (by: Sep 9 2025)
 Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
 Got it. I've added this task:
-  [E][ ] group discussion (from: Sep 15 2025 to: Sep 16 2025)
+  [E][ ] project meeting (from: Mon to: Tue)
 Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
 Here are the tasks in your list:
-1.[T][ ] borrow book
-2.[D][ ] return pen (by: Sep 10 2025)
-3.[E][ ] group discussion (from: Sep 15 2025 to: Sep 16 2025)
-Nice! I've marked this task as done:
-  [D][X] return pen (by: Sep 10 2025)
-OK, I've marked this task as not done yet:
-  [D][ ] return pen (by: Sep 10 2025)
+1.[T][ ] read book
+2.[D][ ] return book (by: Sep 9 2025)
+3.[E][ ] project meeting (from: Mon to: Tue)
+____________________________________________________________
+____________________________________________________________
+OOPS!!! I'm sorry, but I don't know what that means :-(
+____________________________________________________________
+____________________________________________________________
+OOPS!!! I'm sorry, but I don't know what that means :-(
+____________________________________________________________
+____________________________________________________________
 Noted. I've removed this task:
-  [T][ ] borrow book
+  [E][ ] project meeting (from: Mon to: Tue)
 Now you have 2 tasks in the list.
-Here are the tasks in your list:
-1.[D][ ] return pen (by: Sep 10 2025)
-2.[E][ ] group discussion (from: Sep 15 2025 to: Sep 16 2025)
+____________________________________________________________
+____________________________________________________________
 Bye. Hope to see you again soon!
+____________________________________________________________

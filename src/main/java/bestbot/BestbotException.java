@@ -1,7 +1,7 @@
 package bestbot;
 
 /**
- * Exception thrown when Duke encounters an error in user input.
+ * Exception class to represent application-specific errors in Bestbot.
  */
 public class BestbotException extends Exception {
     public BestbotException(String message) {
