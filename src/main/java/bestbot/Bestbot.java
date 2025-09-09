@@ -5,38 +5,52 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Main class for Bestbot application (Level-7 ready).
+ * Entry point for the Bestbot application.
+ * Handles user interaction, command parsing, and task management.
  */
 public class Bestbot {
-    private static final List<Task> tasks = new ArrayList<>();
-    private static Storage storage;
-    private static final String DEFAULT_SAVE_PATH = "../data/bestbot.txt";
+    /** List of tasks currently managed by Bestbot. */
+    private final List<Task> tasks;
 
-    public static void main(String[] args) {
-        // choose save path: from arg (for tests) or default (normal usage)
-        String savePath = (args.length > 0) ? args[0] : DEFAULT_SAVE_PATH;
-        storage = new Storage(savePath);
+    /** Storage handler for saving/loading tasks. */
+    private final Storage storage;
 
-        // load saved tasks
-        tasks.addAll(storage.load());
+    /**
+     * Creates a Bestbot instance with a specified storage file.
+     *
+     * @param filePath Path to the storage file.
+     */
+    public Bestbot(String filePath) {
+        this.storage = new Storage(filePath);
+        this.tasks = new ArrayList<>(storage.load());
+    }
 
-        // greet
+    /**
+     * Runs the Bestbot application, reading commands from standard input.
+     */
+    public void run() {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Hello! I'm Bestbot");
         System.out.println("What can I do for you?");
 
-        // loop
-        Scanner sc = new Scanner(System.in);
         while (true) {
             String line = sc.nextLine();
             try {
                 handle(line);
+                storage.save(tasks); // save after every command
             } catch (BestbotException e) {
                 System.out.println("OOPS!!! " + e.getMessage());
             }
         }
     }
 
-    private static void handle(String line) throws BestbotException {
+    /**
+     * Handles a single user command.
+     *
+     * @param line The full user input.
+     * @throws BestbotException If the command is invalid.
+     */
+    private void handle(String line) throws BestbotException {
         String[] parts = Parser.splitFirstWord(line);
         Command cmd = Command.fromString(parts[0]);
         String args = parts[1];
@@ -44,7 +58,6 @@ public class Bestbot {
         switch (cmd) {
             case BYE:
                 System.out.println("Bye. Hope to see you again soon!");
-                storage.save(tasks); // save on exit too
                 System.exit(0);
                 return;
 
@@ -59,9 +72,8 @@ public class Bestbot {
                 if (args.isBlank()) {
                     throw new BestbotException("The description of a todo cannot be empty.");
                 }
-                tasks.add(new Todo(args.trim()));
+                tasks.add(new Todo(args));
                 printAddedTask(tasks.get(tasks.size() - 1));
-                storage.save(tasks);
                 return;
 
             case DEADLINE:
@@ -74,7 +86,6 @@ public class Bestbot {
                 }
                 tasks.add(new Deadline(d[0].trim(), d[1].trim()));
                 printAddedTask(tasks.get(tasks.size() - 1));
-                storage.save(tasks);
                 return;
 
             case EVENT:
@@ -84,12 +95,13 @@ public class Bestbot {
                 String[] eventParts = args.split("/from", 2);
                 String description = eventParts[0].trim();
                 String[] timeParts = eventParts[1].split("/to", 2);
+
                 if (description.isBlank() || timeParts[0].isBlank() || timeParts[1].isBlank()) {
                     throw new BestbotException("Event needs a description, /from <time>, and /to <time>.");
                 }
+
                 tasks.add(new Event(description, timeParts[0].trim(), timeParts[1].trim()));
                 printAddedTask(tasks.get(tasks.size() - 1));
-                storage.save(tasks);
                 return;
 
             case DELETE:
@@ -109,7 +121,6 @@ public class Bestbot {
                 System.out.println("Noted. I've removed this task:");
                 System.out.println("  " + removed);
                 System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                storage.save(tasks);
                 return;
 
             case MARK:
@@ -123,7 +134,6 @@ public class Bestbot {
                 tasks.get(markIndex).markAsDone();
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("  " + tasks.get(markIndex));
-                storage.save(tasks);
                 return;
 
             case UNMARK:
@@ -137,7 +147,6 @@ public class Bestbot {
                 tasks.get(unmarkIndex).markAsNotDone();
                 System.out.println("OK, I've marked this task as not done yet:");
                 System.out.println("  " + tasks.get(unmarkIndex));
-                storage.save(tasks);
                 return;
 
             case UNKNOWN:
@@ -146,10 +155,24 @@ public class Bestbot {
         }
     }
 
-    private static void printAddedTask(Task t) {
+    /**
+     * Prints a confirmation message after adding a task.
+     *
+     * @param t The task that was added.
+     */
+    private void printAddedTask(Task t) {
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + t);
         System.out.printf("Now you have %d tasks in the list.%n", tasks.size());
     }
-}
 
+    /**
+     * Program entry point.
+     *
+     * @param args Command line arguments (optional storage file path).
+     */
+    public static void main(String[] args) {
+        String filePath = args.length > 0 ? args[0] : "bestbot.txt";
+        new Bestbot(filePath).run();
+    }
+}
