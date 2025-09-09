@@ -1,4 +1,9 @@
-package bestbot;
+package bestbot.command;
+
+import bestbot.Ui;
+import bestbot.Storage;
+import bestbot.task.TaskList;
+import bestbot.exception.BestbotException;
 
 /**
  * Abstract representation of a user command.

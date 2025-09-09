@@ -1,4 +1,11 @@
-package bestbot;
+package bestbot.command;
+
+import bestbot.exception.BestbotException;
+import bestbot.Ui;
+import bestbot.Storage;
+import bestbot.task.Task;
+import bestbot.task.TaskList;
+import bestbot.task.Deadline;
 
 /**
  * Command to add a new Deadline task.

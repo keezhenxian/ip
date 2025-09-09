@@ -1,4 +1,4 @@
-package bestbot;
+package bestbot.exception;
 
 /**
  * Exception class to represent application-specific errors in Bestbot.

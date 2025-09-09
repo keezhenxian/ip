@@ -1,5 +1,8 @@
 package bestbot;
 
+import bestbot.command.*;
+import bestbot.exception.BestbotException;
+
 /**
  * Parses user input strings into Command objects.
  */

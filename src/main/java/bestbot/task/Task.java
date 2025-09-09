@@ -1,4 +1,6 @@
-package bestbot;
+package bestbot.task;
+
+import bestbot.exception.BestbotException;
 
 /**
  * Base class for tasks.

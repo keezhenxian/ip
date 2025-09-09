@@ -1,4 +1,4 @@
-package bestbot;
+package bestbot.task;
 
 /**
  * Simple todo task.

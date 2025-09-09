@@ -1,5 +1,9 @@
 package bestbot;
 
+import bestbot.command.Command;
+import bestbot.task.TaskList;
+import bestbot.exception.BestbotException;
+
 /**
  * Entry point of the Bestbot application.
  * Handles setup, main loop, and delegates commands.

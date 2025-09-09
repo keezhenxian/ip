@@ -1,4 +1,4 @@
-package bestbot;
+package bestbot.task;
 
 /**
  * Task that happens within a time range (from...to).

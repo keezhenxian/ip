@@ -1,4 +1,4 @@
-package bestbot;
+package bestbot.task;
 
 import java.util.ArrayList;
 import java.util.List;

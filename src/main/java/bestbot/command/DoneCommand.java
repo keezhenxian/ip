@@ -1,4 +1,10 @@
-package bestbot;
+package bestbot.command;
+
+import bestbot.Ui;
+import bestbot.Storage;
+import bestbot.task.Task;
+import bestbot.task.TaskList;
+import bestbot.exception.BestbotException;
 
 /**
  * Command to mark a task as done.

@@ -1,7 +1,8 @@
-package bestbot;
+package bestbot.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 
 /**
  * Task with a deadline ("by" date).
