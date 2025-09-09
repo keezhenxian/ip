@@ -18,6 +18,11 @@ import bestbot.exception.BestbotException;
 public class Storage {
     private final String filePath;
 
+    /**
+     * Constructs a Storage object bound to the specified file.
+     *
+     * @param filePath The path to the storage file.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }

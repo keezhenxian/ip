@@ -12,6 +12,11 @@ import bestbot.exception.BestbotException;
 public class DoneCommand extends Command {
     private final int index;
 
+    /**
+     * Constructs a DoneCommand with the task's 1-based index.
+     *
+     * @param index The index of the task to mark as done.
+     */
     public DoneCommand(int index) {
         this.index = index;
     }

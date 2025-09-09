@@ -15,6 +15,13 @@ public class AddEventCommand extends Command {
     private final String from;
     private final String to;
 
+    /**
+     * Constructs an Event command with description and timing.
+     *
+     * @param description The task description.
+     * @param from        Starting time/date.
+     * @param to          Ending time/date.
+     */
     public AddEventCommand(String description, String from, String to) {
         this.description = description;
         this.from = from;

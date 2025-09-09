@@ -33,7 +33,7 @@ public class Bestbot {
     }
 
     /**
-     * Runs the main loop of Bestbot.
+     * Starts the interactive loop to process user commands.
      */
     public void run() {
         ui.showWelcome();
