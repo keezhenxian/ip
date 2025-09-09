@@ -12,6 +12,11 @@ import bestbot.exception.BestbotException;
 public class DeleteCommand extends Command {
     private final int index;
 
+    /**
+     * Constructs a DeleteCommand for the given 1-based index.
+     *
+     * @param index The index of the task to delete.
+     */
     public DeleteCommand(int index) {
         this.index = index;
     }

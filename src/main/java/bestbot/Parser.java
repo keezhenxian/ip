@@ -7,6 +7,14 @@ import bestbot.exception.BestbotException;
  * Parses user input strings into Command objects.
  */
 public class Parser {
+
+    /**
+     * Parses the full user command text into a Command.
+     *
+     * @param fullCommand The raw input line.
+     * @return An instantiated {@link Command}.
+     * @throws BestbotException If the command is invalid or malformed.
+     */
     public static Command parse(String fullCommand) throws BestbotException {
         String[] parts = fullCommand.trim().split(" ", 2);
         String cmd = parts[0].toLowerCase();

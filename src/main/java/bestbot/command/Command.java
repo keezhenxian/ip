@@ -1,27 +1,31 @@
 package bestbot.command;
 
-import bestbot.Ui;
 import bestbot.Storage;
+import bestbot.Ui;
 import bestbot.task.TaskList;
 import bestbot.exception.BestbotException;
 
 /**
- * Abstract representation of a user command.
- * Each concrete command must implement execute() and isExit().
+ * Represents an executable command in Bestbot.
  */
 public abstract class Command {
+
     /**
      * Executes the command.
      *
-     * @param tasks   TaskList to operate on.
-     * @param ui      UI for user interaction.
-     * @param storage Storage handler for persistence.
-     * @throws BestbotException If execution fails due to invalid input or logic errors.
+     * @param tasks   The task list to apply the command on.
+     * @param ui      The UI handler for user interaction.
+     * @param storage The storage handler for saving or loading tasks.
+     * @throws BestbotException If an error occurs during execution.
      */
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BestbotException;
 
     /**
-     * Indicates whether this command should exit the program.
+     * Indicates whether this command signals the application to exit.
+     *
+     * @return true if this command ends the program; false otherwise.
      */
-    public abstract boolean isExit();
+    public boolean isExit() {
+        return false;
+    }
 }
