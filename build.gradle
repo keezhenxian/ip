@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
@@ -8,21 +8,25 @@ repositories {
 }
 
 dependencies {
-    // existing deps...
-    // Add JUnit 5:
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    // Your test dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
 }
 
-application {
-    // your main class, adjust if different
-    mainClass = 'bestbot.Bestbot'
-}
-
-test {
+tasks.withType(Test) {
     useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-        exceptionFormat "full"
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'bestbot.Bestbot'   // <-- replace with your main class
+        )
     }
 }
+
+shadowJar {
+    archiveFileName = 'bestbot.jar'
+}
+
 
