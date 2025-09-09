@@ -1,59 +1,79 @@
 package bestbot;
 
-import java.io.File;
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * Simple file storage using a line-based format compatible with Task.encode/decode.
+ * Handles saving and loading tasks from a file on disk.
+ * Each task is saved in a machine-friendly format that can be parsed later.
  */
 public class Storage {
-    private final String filePath;
+    /** Path to the save file. */
+    private final Path filePath;
 
+    /**
+     * Creates a Storage object for the given file path.
+     *
+     * @param filePath Path to the save file.
+     */
     public Storage(String filePath) {
-        this.filePath = filePath;
+        this.filePath = Path.of(filePath);
     }
 
-    /** Loads tasks from file; returns empty list if file doesn't exist. */
+    /**
+     * Loads all tasks from the save file.
+     *
+     * @return List of tasks.
+     */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
-        File f = new File(filePath);
-        if (!f.exists()) {
+        if (!Files.exists(filePath)) {
             return tasks;
         }
-        try (Scanner sc = new Scanner(f)) {
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                Task t = Task.decode(line);
-                if (t != null) {
-                    tasks.add(t);
+
+        try {
+            List<String> lines = Files.readAllLines(filePath);
+            for (String line : lines) {
+                String[] parts = line.split(" \\| ");
+                switch (parts[0]) {
+                    case "T":
+                        tasks.add(Todo.fromSaveFormat(parts));
+                        break;
+                    case "D":
+                        tasks.add(Deadline.fromSaveFormat(parts));
+                        break;
+                    case "E":
+                        tasks.add(Event.fromSaveFormat(parts));
+                        break;
+                    default:
+                        System.out.println("Unknown task type: " + parts[0]);
                 }
             }
-        } catch (IOException ioe) {
-            System.out.println("Error loading tasks: " + ioe.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
         }
+
         return tasks;
     }
 
-    /** Saves tasks to file (overwrites file). Ensures parent directory exists. */
+    /**
+     * Saves all tasks to the save file in machine-friendly format.
+     *
+     * @param tasks List of tasks to save.
+     */
     public void save(List<Task> tasks) {
-        try {
-            File f = new File(filePath);
-            File parent = f.getParentFile();
-            if (parent != null) {
-                parent.mkdirs();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
+            for (Task task : tasks) {
+                writer.write(task.toSaveFormat());
+                writer.newLine();
             }
-            try (FileWriter fw = new FileWriter(f, false)) {
-                for (Task t : tasks) {
-                    fw.write(t.encode());
-                    fw.write(System.lineSeparator());
-                }
-            }
-        } catch (IOException ioe) {
-            System.out.println("Error saving tasks: " + ioe.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error saving tasks: " + e.getMessage());
         }
     }
 }

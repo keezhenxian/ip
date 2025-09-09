@@ -1,91 +1,56 @@
 package bestbot;
 
 /**
- * Base type for all tasks.
+ * Abstract base class for all types of tasks (Todo, Deadline, Event).
+ * Provides common fields and methods for handling task status.
  */
 public abstract class Task {
+    /** Description of the task. */
     protected final String description;
+
+    /** Whether the task is marked as done. */
     protected boolean isDone;
 
-    protected Task(String description) {
+    /**
+     * Creates a new Task with the given description.
+     * Initially, the task is not marked as done.
+     *
+     * @param description Description of the task.
+     */
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    /** Marks this task as done. */
     public void markAsDone() {
         this.isDone = true;
     }
 
+    /** Marks this task as not done. */
     public void markAsNotDone() {
         this.isDone = false;
     }
 
-    protected String getStatusIcon() {
-        return isDone ? "X" : " ";
-    }
-
-    /** Single-character type code: 'T', 'D', or 'E'. */
-    protected abstract char typeCode();
-
-    /** Body part of the encode string excluding type and done flag. */
-    protected abstract String encodeBody();
-
-    /** Encode to a line like: T | 1 | read book  OR  D | 0 | desc | by  OR  E | 1 | desc | from | to */
-    public String encode() {
-        return typeCode() + " | " + (isDone ? "1" : "0") + " | " + encodeBody();
-    }
-
     /**
-     * Decode one line into a Task.
-     * Accepts lines of forms:
-     *  - T | {0|1} | description
-     *  - D | {0|1} | description | by
-     *  - E | {0|1} | description | from | to
+     * Returns an "X" if the task is done, otherwise a space.
+     *
+     * @return "X" if done, " " if not done.
      */
-    public static Task decode(String line) {
-        if (line == null || line.isBlank()) {
-            return null;
-        }
-        // split on " | " allowing extra spaces around '|'
-        String[] parts = line.split("\\s*\\|\\s*");
-        if (parts.length < 3) {
-            return null;
-        }
-
-        String type = parts[0];
-        String doneFlag = parts[1];
-        String desc = parts[2];
-
-        Task t;
-        switch (type) {
-            case "T":
-                t = new Todo(desc);
-                break;
-            case "D":
-                if (parts.length < 4) return null;
-                t = new Deadline(desc, parts[3]);
-                break;
-            case "E":
-                if (parts.length < 5) return null;
-                t = new Event(desc, parts[3], parts[4]);
-                break;
-            default:
-                return null;
-        }
-
-        if ("1".equals(doneFlag)) {
-            t.markAsDone();
-        } else {
-            t.markAsNotDone();
-        }
-        return t;
+    protected String getStatusIcon() {
+        return (isDone ? "X" : " ");
     }
 
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    /**
+     * Converts this task into a savable string format for Storage.
+     * Subclasses must implement their own format.
+     *
+     * @return String representation for saving.
+     */
+    public abstract String toSaveFormat();
 }
-
-
-

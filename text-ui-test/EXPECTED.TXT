@@ -4,23 +4,23 @@ Got it. I've added this task:
   [T][ ] borrow book
 Now you have 1 tasks in the list.
 Got it. I've added this task:
-  [D][ ] return pen (by: 2025-09-10)
+  [D][ ] return pen (by: Sep 10 2025)
 Now you have 2 tasks in the list.
 Got it. I've added this task:
-  [E][ ] group discussion (from: 2025-09-15 to: 2025-09-16)
+  [E][ ] group discussion (from: Sep 15 2025 to: Sep 16 2025)
 Now you have 3 tasks in the list.
 Here are the tasks in your list:
 1.[T][ ] borrow book
-2.[D][ ] return pen (by: 2025-09-10)
-3.[E][ ] group discussion (from: 2025-09-15 to: 2025-09-16)
+2.[D][ ] return pen (by: Sep 10 2025)
+3.[E][ ] group discussion (from: Sep 15 2025 to: Sep 16 2025)
 Nice! I've marked this task as done:
-  [D][X] return pen (by: 2025-09-10)
+  [D][X] return pen (by: Sep 10 2025)
 OK, I've marked this task as not done yet:
-  [D][ ] return pen (by: 2025-09-10)
+  [D][ ] return pen (by: Sep 10 2025)
 Noted. I've removed this task:
   [T][ ] borrow book
 Now you have 2 tasks in the list.
 Here are the tasks in your list:
-1.[D][ ] return pen (by: 2025-09-10)
-2.[E][ ] group discussion (from: 2025-09-15 to: 2025-09-16)
+1.[D][ ] return pen (by: Sep 10 2025)
+2.[E][ ] group discussion (from: Sep 15 2025 to: Sep 16 2025)
 Bye. Hope to see you again soon!
