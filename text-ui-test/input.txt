@@ -1,8 +1,7 @@
 todo read book
-deadline return book /by 2025-09-09
-event project meeting /from Mon /to Tue
-list
-mark 2
-unmark 2
-delete 3
+deadline return book /by 2023-06-06
+event project meeting /from 2023-07-01 /to 2023-07-02
+find book
+find meeting
+find homework
 bye
