@@ -29,6 +29,7 @@ public class Bestbot {
             ui.showLoadingError();
             loadedTasks = new TaskList();
         }
+
         this.tasks = loadedTasks;
     }
 
