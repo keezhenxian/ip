@@ -54,6 +54,10 @@ public class Parser {
                 String[] times = eParts[1].split("/to", 2);
                 return new AddEventCommand(desc, times[0].trim(), times[1].trim());
 
+            case "find":
+                if (parts.length < 2) throw new BestbotException("Please specify a keyword to find.");
+                return new FindCommand(parts[1].trim());
+
             default:
                 throw new BestbotException("I'm sorry, but I don't know what that means :-(");
         }
