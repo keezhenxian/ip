@@ -47,13 +47,13 @@ public class Bestbot {
             try {
                 String fullCommand = ui.readCommand();
                 ui.showLine();
-
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
 
             } catch (BestbotException e) {
                 ui.showError(e.getMessage()); // centralized error handling
+
             } finally {
                 ui.showLine();
             }
