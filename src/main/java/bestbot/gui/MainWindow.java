@@ -1,5 +1,6 @@
 package bestbot.gui;
 
+import bestbot.Bestbot;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -24,26 +25,34 @@ public class MainWindow {
     private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
     private final Image botImage = new Image(this.getClass().getResourceAsStream("/images/bot.png"));
 
+    // ⚡ Add Bestbot backend
+    private Bestbot bestbot;
+
+    /**
+     * Setter for the backend Bestbot instance.
+     *
+     * @param b the Bestbot instance to use
+     */
+    public void setBestbot(Bestbot b) {
+        this.bestbot = b;
+    }
+
     /**
      * Handles user input when the Send button is pressed.
      * Creates dialog bubbles for both user and bot and adds them to the ListView.
      */
     @FXML
-    private void handleUserInput() {
+    public void handleUserInput() {
         String input = userInput.getText();
+        if (input.isBlank()) return;
 
-        if (input.isBlank()) {
-            return;
-        }
+        String response = bestbot.getResponse(input); // Bestbot backend
 
-        // Create dialog boxes for user and bot
-        DialogBox userDialog = DialogBox.getUserDialog(input, userImage);
-        DialogBox botDialog = DialogBox.getBotDialog(getResponse(input), botImage);
+        dialogContainer.getItems().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getBotDialog(response, botImage)
+        );
 
-        // Add dialog boxes to the ListView
-        dialogContainer.getItems().addAll(userDialog, botDialog);
-
-        // Clear user input field
         userInput.clear();
     }
 

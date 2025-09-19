@@ -2,30 +2,44 @@ package bestbot;
 
 import java.util.List;
 import java.util.Scanner;
+import java.io.PrintStream;
 import bestbot.task.Task;
 
 /**
  * Handles all user interaction (input/output).
+ * Can print to console or to a custom PrintStream (for GUI integration).
  */
 public class Ui {
     private final Scanner scanner;
+    private final PrintStream out; // Output stream (System.out or GUI)
 
     /**
-     * Constructs a Ui object to handle user input and output.
+     * Constructs a Ui object to handle console input/output.
      */
     public Ui() {
-        scanner = new Scanner(System.in);
+        this(System.out); // default to console
+    }
+
+    /**
+     * Constructs a Ui object with a custom output stream.
+     * Useful for GUI integration.
+     *
+     * @param out PrintStream to write output
+     */
+    public Ui(PrintStream out) {
+        this.out = out;
+        this.scanner = new Scanner(System.in);
     }
 
     /** Prints the welcome message. */
     public void showWelcome() {
-        System.out.println("Hello! I'm Bestbot");
-        System.out.println("What can I do for you?");
+        out.println("Hello! I'm Bestbot");
+        out.println("What can I do for you?");
     }
 
     /** Prints the exit message. */
     public void showGoodbye() {
-        System.out.println("Bye. Hope to see you again soon!");
+        out.println("Bye. Hope to see you again soon!");
     }
 
     /** Reads the next input line from the user. */
@@ -35,7 +49,7 @@ public class Ui {
 
     /** Prints a divider line between UI outputs. */
     public void showLine() {
-        System.out.println("____________________________________________________________");
+        out.println("____________________________________________________________");
     }
 
     /**
@@ -44,12 +58,12 @@ public class Ui {
      * @param message The error text.
      */
     public void showError(String message) {
-        System.out.println("OOPS!!! " + message);
+        out.println("OOPS!!! " + message);
     }
 
     /** Informs the user that loading from file failed. */
     public void showLoadingError() {
-        System.out.println("Error loading tasks, starting with an empty list.");
+        out.println("Error loading tasks, starting with an empty list.");
     }
 
     /**
@@ -58,9 +72,9 @@ public class Ui {
      * @param tasks The list of tasks to display.
      */
     public void showTasks(List<Task> tasks) {
-        System.out.println("Here are the tasks in your list:");
+        out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.printf("%d.%s%n", i + 1, tasks.get(i));
+            out.printf("%d.%s%n", i + 1, tasks.get(i));
         }
     }
 
@@ -71,9 +85,9 @@ public class Ui {
      * @param totalTasks The updated total number of tasks.
      */
     public void showTaskAdded(Task task, int totalTasks) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
-        System.out.printf("Now you have %d tasks in the list.%n", totalTasks);
+        out.println("Got it. I've added this task:");
+        out.println("  " + task);
+        out.printf("Now you have %d tasks in the list.%n", totalTasks);
     }
 
     /**
@@ -83,9 +97,9 @@ public class Ui {
      * @param totalTasks The updated total number of tasks.
      */
     public void showTaskDeleted(Task task, int totalTasks) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + task);
-        System.out.printf("Now you have %d tasks in the list.%n", totalTasks);
+        out.println("Noted. I've removed this task:");
+        out.println("  " + task);
+        out.printf("Now you have %d tasks in the list.%n", totalTasks);
     }
 
     /**
@@ -94,8 +108,8 @@ public class Ui {
      * @param task The task that was marked done.
      */
     public void showTaskDone(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " + task);
+        out.println("Nice! I've marked this task as done:");
+        out.println("  " + task);
     }
 
     /**
@@ -105,11 +119,11 @@ public class Ui {
      */
     public void showFoundTasks(List<Task> tasks) {
         if (tasks.isEmpty()) {
-            System.out.println("No matching tasks found.");
+            out.println("No matching tasks found.");
         } else {
-            System.out.println("Here are the matching tasks in your list:");
+            out.println("Here are the matching tasks in your list:");
             for (int i = 0; i < tasks.size(); i++) {
-                System.out.printf("%d.%s%n", i + 1, tasks.get(i));
+                out.printf("%d.%s%n", i + 1, tasks.get(i));
             }
         }
     }

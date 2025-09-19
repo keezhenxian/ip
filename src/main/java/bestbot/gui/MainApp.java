@@ -1,5 +1,6 @@
 package bestbot.gui;
 
+import bestbot.Bestbot;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +15,11 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/view/MainWindow.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+
+        // Inject Bestbot backend
+        MainWindow controller = fxmlLoader.getController();
+        controller.setBestbot(new Bestbot("bestbot.txt"));
+
         stage.setScene(scene);
         stage.setTitle("Bestbot");
         stage.show();
