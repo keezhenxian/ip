@@ -41,9 +41,14 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 }
 
-tasks.withType(Test) {
-    useJUnitPlatform()
+tasks.withType(JavaExec) {
+    // Enable assertions for all JavaExec tasks, including 'run'
+    jvmArgs += "-ea"
+
+    // Optional: pass your file as an argument
+    args = ["src/test/data/text-ui-test/input.txt"]
 }
+
 
 jar {
     manifest {
@@ -54,12 +59,21 @@ jar {
 }
 
 application {
-    mainClass = "bestbot.gui.Launcher"
+    mainClass = "bestbot.gui.Launcher" // replace with your main class FQCN
 }
 
 shadowJar {
     archiveFileName = 'bestbot.jar'
 }
+
+run {
+    // Enable assertions for the JVM
+    jvmArgs = ["-ea"]
+
+    // Optional: provide default input file
+    args = ["src/test/data/text-ui-test/input.txt"]
+}
+
 
 
 

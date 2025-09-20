@@ -7,6 +7,10 @@ import bestbot.exception.BestbotException;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * Entry point of the Bestbot application.
  * Handles setup, main loop, and delegates commands.
@@ -29,7 +33,6 @@ public class Bestbot {
         try {
             loadedTasks = new TaskList(storage.load());
         } catch (BestbotException e) {
-            ui.showLoadingError();
             loadedTasks = new TaskList();
         }
 
@@ -64,9 +67,30 @@ public class Bestbot {
      * Program entry point.
      */
     public static void main(String[] args) {
-        String filePath = args.length > 0 ? args[0] : "bestbot.txt";
-        new Bestbot(filePath).run();
+        String filePath = "bestbot.txt";
+
+        Bestbot bot = new Bestbot(filePath);
+
+        if (args.length == 0) {
+            // Interactive mode
+            bot.run();
+        } else if (args.length == 1) {
+            // Just storage file, still interactive
+            bot.run();
+        } else if (args.length == 2) {
+            // Test mode: redirect System.in to file
+            try {
+                java.io.InputStream inputFile = new java.io.FileInputStream(args[1]);
+                System.setIn(inputFile);
+                bot.run();
+            } catch (java.io.FileNotFoundException e) {
+                System.err.println("Input file not found: " + args[1]);
+            }
+        } else {
+            System.err.println("Usage: ./gradlew run [storageFile [inputFile]]");
+        }
     }
+
 
     /**
      * Generates a response string for a given input, without printing to console.
@@ -87,4 +111,28 @@ public class Bestbot {
             return e.getMessage();
         }
     }
+
+    public void runFromFile(String inputFilePath) {
+        ui.showWelcome();
+        boolean isExit = false;
+
+        try (Scanner scanner = new Scanner(new File(inputFilePath))) {
+            while (!isExit && scanner.hasNextLine()) {
+                String fullCommand = scanner.nextLine();
+                ui.showLine();
+                try {
+                    Command c = Parser.parse(fullCommand);
+                    c.execute(tasks, ui, storage);
+                    isExit = c.isExit();
+                } catch (BestbotException e) {
+                    ui.showError(e.getMessage());
+                } finally {
+                    ui.showLine();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            ui.showError("Input file not found: " + inputFilePath);
+        }
+    }
+
 }

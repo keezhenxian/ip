@@ -11,13 +11,16 @@ public class Parser {
     /**
      * Parses the full user command text into a Command.
      *
-     * @param fullCommand The raw input line.
+     * @param fullCommand The raw input line. Must not be null.
      * @return An instantiated {@link Command}.
      * @throws BestbotException If the command is invalid or malformed.
      */
     public static Command parse(String fullCommand) throws BestbotException {
+        assert fullCommand != null : "User input command should not be null";
+
         String[] parts = fullCommand.trim().split(" ", 2);
         String cmd = parts[0].toLowerCase();
+        assert cmd.length() > 0 : "Command keyword must not be empty";
 
         switch (cmd) {
             case "bye":
@@ -28,10 +31,12 @@ public class Parser {
 
             case "done":
                 if (parts.length < 2) throw new BestbotException("Please specify a task number.");
+                assert parts[1].matches("\\d+") : "Task number for 'done' must be numeric";
                 return new DoneCommand(Integer.parseInt(parts[1]));
 
             case "delete":
                 if (parts.length < 2) throw new BestbotException("Please specify a task number.");
+                assert parts[1].matches("\\d+") : "Task number for 'delete' must be numeric";
                 return new DeleteCommand(Integer.parseInt(parts[1]));
 
             case "todo":
@@ -43,6 +48,7 @@ public class Parser {
                     throw new BestbotException("Deadline needs description and /by <date>.");
                 }
                 String[] deadlineParts = parts[1].split("/by", 2);
+                assert deadlineParts.length == 2 : "Deadline command must contain description and /by";
                 return new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
 
             case "event":
@@ -52,6 +58,7 @@ public class Parser {
                 String[] eParts = parts[1].split("/from", 2);
                 String desc = eParts[0].trim();
                 String[] times = eParts[1].split("/to", 2);
+                assert times.length == 2 : "Event command must contain /from and /to";
                 return new AddEventCommand(desc, times[0].trim(), times[1].trim());
 
             case "find":

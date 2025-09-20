@@ -21,27 +21,39 @@ public abstract class Task {
      * @param description Description of the task.
      */
     public Task(String description) {
+        assert description != null && !description.isBlank() : "Task description should not be null or empty";
         this.description = description;
         this.isDone = false;
     }
 
+    /**
+     * Marks the task as completed.
+     */
     public void markAsDone() {
         this.isDone = true;
     }
 
+    /**
+     * Marks the task as not completed.
+     */
     public void markAsNotDone() {
         this.isDone = false;
     }
 
     /**
-     * Returns the status icon representing whether the task is done.
+     * Returns a status icon representing whether the task is completed.
      *
-     * @return {@code "X"} if the task is done, {@code " "} otherwise.
+     * @return "X" if done, otherwise a blank space.
      */
     protected String getStatusIcon() {
         return isDone ? "X" : " ";
     }
 
+    /**
+     * Returns a string representation of the task.
+     *
+     * @return Task in display format.
+     */
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
@@ -55,14 +67,15 @@ public abstract class Task {
     public abstract String toSaveFormat();
 
     /**
-     * Creates a {@code Task} object from its saved string representation.
+     * Parses a saved task line and creates the corresponding Task object.
      *
-     * @param line The line containing the saved task data.
-     * @return The parsed {@code Task}.
-     * @throws BestbotException If the line cannot be parsed into a valid task.
+     * @param line Line from the save file.
+     * @return Task represented by the line.
+     * @throws BestbotException If the line cannot be parsed.
      */
     public static Task fromSaveFormat(String line) throws BestbotException {
-        // Placeholder implementation: actual parsing logic to be added.
+        assert line != null && !line.isBlank() : "Save format line should not be null or empty";
+        // Parse logic depending on saved format
         throw new BestbotException("Parsing from save not yet implemented.");
     }
 }
