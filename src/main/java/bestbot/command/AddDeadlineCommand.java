@@ -8,23 +8,32 @@ import bestbot.task.TaskList;
 import bestbot.task.Deadline;
 
 /**
- * Command to add a new Deadline task.
+ * Adds a new {@link Deadline} task to the task list.
  */
 public class AddDeadlineCommand extends Command {
     private final String description;
     private final String by;
 
     /**
-     * Constructs a deadline command given description and deadline.
+     * Creates an {@code AddDeadlineCommand} with the given description and deadline.
      *
-     * @param description The task description.
-     * @param by          The deadline string.
+     * @param description Description of the task.
+     * @param by          Deadline of the task.
      */
     public AddDeadlineCommand(String description, String by) {
         this.description = description;
         this.by = by;
     }
 
+    /**
+     * Executes the command by creating a {@link Deadline} task and adding it to the task list.
+     * Updates the UI and saves the task list to storage.
+     *
+     * @param tasks   The task list to add the new deadline task into.
+     * @param ui      The UI used to display feedback.
+     * @param storage The storage used to save tasks persistently.
+     * @throws BestbotException If description or deadline is blank.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BestbotException {
         if (description.isBlank() || by.isBlank()) {
@@ -38,6 +47,11 @@ public class AddDeadlineCommand extends Command {
         storage.save(tasks.getTasks());
     }
 
+    /**
+     * Returns whether this command causes the program to exit.
+     *
+     * @return Always {@code false}, since adding a deadline does not exit the program.
+     */
     @Override
     public boolean isExit() {
         return false;

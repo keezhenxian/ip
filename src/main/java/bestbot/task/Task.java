@@ -3,16 +3,22 @@ package bestbot.task;
 import bestbot.exception.BestbotException;
 
 /**
- * Base class for tasks.
+ * Represents a base class for tasks in the task list.
+ * A task has a description and a completion status.
  */
 public abstract class Task {
+
+    /** Description of the task. */
     protected final String description;
+
+    /** Indicates whether the task has been completed. */
     protected boolean isDone;
 
     /**
-     * Creates a new Task.
+     * Constructs a {@code Task} with the specified description.
+     * The task is initially not marked as done.
      *
-     * @param description Description of the task. Must not be null or empty.
+     * @param description Description of the task.
      */
     public Task(String description) {
         assert description != null && !description.isBlank() : "Task description should not be null or empty";
@@ -40,7 +46,7 @@ public abstract class Task {
      * @return "X" if done, otherwise a blank space.
      */
     protected String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return isDone ? "X" : " ";
     }
 
     /**
@@ -54,9 +60,9 @@ public abstract class Task {
     }
 
     /**
-     * Returns the string format used to save the task to a file.
+     * Returns a string representation of the task suitable for saving to storage.
      *
-     * @return Save format string.
+     * @return The string format of the task for saving.
      */
     public abstract String toSaveFormat();
 
