@@ -72,9 +72,8 @@ public class Ui {
      * @param tasks The list of tasks to display.
      */
     public void showTasks(List<Task> tasks) {
-        out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            out.printf("%d.%s%n", i + 1, tasks.get(i));
+            System.out.println((i + 1) + "." + tasks.get(i));
         }
     }
 

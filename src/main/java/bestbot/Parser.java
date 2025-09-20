@@ -65,6 +65,9 @@ public class Parser {
                 if (parts.length < 2) throw new BestbotException("Please specify a keyword to find.");
                 return new FindCommand(parts[1].trim());
 
+            case "sort":
+                return new SortCommand();
+
             default:
                 throw new BestbotException("I'm sorry, but I don't know what that means :-(");
         }
