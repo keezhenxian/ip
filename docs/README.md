@@ -20,9 +20,11 @@ Adds a simple task without date/time attached.
 `todo read book`
 
 **Expected outcome:**  
-`Got it. I've added this task:
+````
+Got it. I've added this task:
 [T][ ] read book
-Now you have 1 task in the list.`
+Now you have 1 task in the list.
+````
 
 ---
 
@@ -36,9 +38,11 @@ Adds a task that must be done before a specific date.
 `deadline return book /by 2025-06-06`
 
 **Expected outcome:**  
-`Got it. I've added this task:
+````
+Got it. I've added this task:
 [D][ ] return book (by: Jun 6 2025)
-Now you have 2 tasks in the list.`
+Now you have 2 tasks in the list.
+````
 
 ---
 
@@ -52,9 +56,11 @@ Adds a task that happens at a specific time.
 `event project meeting /from 2025-06-06 2pm /to 3pm`
 
 **Expected outcome:**  
-`Got it. I've added this task:
+````
+Got it. I've added this task:
 [E][ ] project meeting (from: 2025-06-06 2pm to: 2pm)
 Now you have 3 tasks in the list.`
+````
 
 ---
 
@@ -62,13 +68,35 @@ Now you have 3 tasks in the list.`
 Displays all the tasks currently stored.
 
 **Command:**  
-list
+`list`
 
 **Expected outcome:**  
+````
 Here are the tasks in your list:
-1.[T][ ] read book
-2.[D][ ] return book (by: Sunday)
-3.[E][ ] project meeting (at: Mon 2pm)
+1. [D]] return book (by: Jun 6 2025)
+2. [E][] project meeting (from: 2025-06-06 2pm to: 3pm)
+3. [T][] read book
+4. [D][] return book (by: Jul 6 2025)
+5. [D][] return book (by: Apr 6 2025)
+````
+
+---
+
+### 5. Sorting tasks
+Sorts tasks in the list by deadline
+
+**Command:**  
+`sort`
+
+**Expected outcome:**  
+````
+Here is your sorted task list:
+1. [D][] return book (by: Apr 6 2025)
+2. [D][] return book (by: Jun 6 2025)
+3. [D][] return book (by: Jul 6 2025)
+4. [Ell] project meeting (from: 2025-06-06 2pm to: 3pm)
+5. [T][] read book
+````
 
 ---
 
@@ -82,8 +110,10 @@ Marks a task in the list as completed.
 `mark 2`
 
 **Expected outcome:**  
-`Nice! I've marked this task as done:
-[D][X] return book (by: Sunday)`
+````
+Nice! I've marked this task as done:
+[D][X] return book (by: Jun 6 2025)
+````
 
 ---
 
@@ -97,8 +127,10 @@ Marks a previously completed task as not done.
 `unmark 2`
 
 **Expected outcome:**  
-`OK, I've marked this task as not done yet:
-[D][ ] return book (by: Sunday)`
+````
+OK, I've marked this task as not done yet:
+[D][] return book (by: Jun 6 2025)
+````
 
 ---
 
@@ -112,9 +144,11 @@ Removes a task from the list.
 `delete 3`
 
 **Expected outcome:**  
-`Noted. I've removed this task:
-[E][ ] project meeting (at: Mon 2pm)
-Now you have 2 tasks in the list.`
+````
+Noted. I've removed this task:
+[D][] return book (by: Jul 6 2025)
+Now you have 4 tasks in the list.
+````
 
 ---
 
@@ -129,12 +163,15 @@ Searches tasks whose descriptions contain a given keyword.
 
 **Expected outcome:**  
 `Here are the matching tasks in your list:
-1.[T][ ] read book
-2.[D][ ] return book (by: Jun 6 2025)`
+```
+1. [D][] return book (by: Apr 6 2025)
+2. [D][] return book (by: Jun 6 2025)
+3. [T][ ] read book
+```
 
 ---
 
-### 9. Exiting the program
+### 10. Exiting the program
 Closes the application.
 
 **Command:**  
