@@ -1,4 +1,2 @@
-D | 0 | finish report | 2024-12-01
+T | 0 | read book
 D | 0 | return book | 2025-06-06
-T | 0 | buy milk
-T | 0 | call mom

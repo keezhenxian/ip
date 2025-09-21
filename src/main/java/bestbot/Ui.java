@@ -136,6 +136,17 @@ public class Ui {
         }
     }
 
+
+    /**
+     * Displays a message when a task has been marked as not done.
+     *
+     * @param task The task that was unmarked.
+     */
+    public void showTaskUnmarked(Task task) {
+        out.println("OK, I've marked this task as not done yet:");
+        out.println("  " + task);
+    }
+
     /**
      * Prints a plain message to the output stream without any formatting.
      *

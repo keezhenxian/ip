@@ -68,6 +68,16 @@ public class Parser {
             case "sort":
                 return new SortCommand();
 
+            case "mark":
+                if (parts.length < 2) throw new BestbotException("Please specify a task number.");
+                assert parts[1].matches("\\d+") : "Task number for 'mark' must be numeric";
+                return new MarkCommand(Integer.parseInt(parts[1]));
+
+            case "unmark":
+                if (parts.length < 2) throw new BestbotException("Please specify a task number.");
+                assert parts[1].matches("\\d+") : "Task number for 'unmark' must be numeric";
+                return new UnmarkCommand(Integer.parseInt(parts[1]));
+
             default:
                 throw new BestbotException("I'm sorry, but I don't know what that means :-(");
         }
