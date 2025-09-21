@@ -8,8 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 
 /**
- * Controller class for MainWindow.fxml.
- * Handles user input and displays dialog messages.
+ * MainWindow: Controller for MainWindow.fxml.
+ *
+ * Handles all user interactions including input from the text field
+ * and displaying dialog bubbles in the ListView.
  */
 public class MainWindow {
 
@@ -25,46 +27,48 @@ public class MainWindow {
     private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
     private final Image botImage = new Image(this.getClass().getResourceAsStream("/images/bot.png"));
 
-    // ⚡ Add Bestbot backend
-    private Bestbot bestbot;
+    private Bestbot bestbot; // ⚡ backend
 
     /**
-     * Setter for the backend Bestbot instance.
+     * Sets the backend Bestbot instance.
      *
-     * @param b the Bestbot instance to use
+     * @param b Bestbot instance
      */
     public void setBestbot(Bestbot b) {
         this.bestbot = b;
     }
 
     /**
-     * Handles user input when the Send button is pressed.
-     * Creates dialog bubbles for both user and bot and adds them to the ListView.
+     * Initializes the controller.
+     *
+     * Binds Enter key press to send messages.
+     */
+    @FXML
+    public void initialize() {
+        userInput.setOnAction(event -> handleUserInput());
+        sendButton.setOnAction(event -> handleUserInput());
+    }
+
+    /**
+     * Handles user input: creates dialog boxes for user and bot,
+     * adds them to the dialog container, and clears the input field.
+     *
+     * ⚡ Also ensures both pressing Enter and Send button triggers the same behavior.
      */
     @FXML
     public void handleUserInput() {
         String input = userInput.getText();
         if (input.isBlank()) return;
 
-        String response = bestbot.getResponse(input); // Bestbot backend
+        String response = bestbot.getResponse(input);
 
+        // Add dialog boxes to ListView
         dialogContainer.getItems().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getBotDialog(response, botImage)
         );
 
         userInput.clear();
-    }
-
-    /**
-     * Generates a response from the bot.
-     * Replace with actual backend logic when integrated.
-     *
-     * @param input User input string
-     * @return Response string from bot
-     */
-    private String getResponse(String input) {
-        return "Echo: " + input; // placeholder for real response
     }
 }
 

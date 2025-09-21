@@ -10,8 +10,10 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 
 /**
- * Represents a single chat dialog bubble in the GUI.
- * Can be used for both user and bot messages.
+ * DialogBox: Represents a single chat dialog bubble in the GUI.
+ *
+ * <p>This class is used for both user and bot messages.
+ * Provides factory methods to construct dialog boxes with proper alignment and styling.</p>
  */
 public class DialogBox extends HBox {
 
@@ -24,8 +26,8 @@ public class DialogBox extends HBox {
     /**
      * Constructs a DialogBox.
      *
-     * @param text The text to display in the dialog.
-     * @param img  The image avatar for this dialog.
+     * @param text Text to display in the dialog.
+     * @param img  Image avatar associated with the dialog.
      */
     private DialogBox(String text, Image img) {
         try {
@@ -42,26 +44,30 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Creates a DialogBox for user input.
+     * Creates a DialogBox for user messages.
      *
-     * @param text The user's message.
-     * @param img  User avatar image.
-     * @return DialogBox representing the user's message.
+     * @param text User message text
+     * @param img  User avatar
+     * @return DialogBox aligned to the right with green background
      */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+        db.setStyle("-fx-background-color: #d0f0c0; -fx-padding: 8; -fx-background-radius: 8;");
+        db.setNodeOrientation(javafx.geometry.NodeOrientation.RIGHT_TO_LEFT);
+        return db;
     }
 
     /**
-     * Creates a DialogBox for bot reply.
+     * Creates a DialogBox for bot messages.
      *
-     * @param text The bot's message.
-     * @param img  Bot avatar image.
-     * @return DialogBox representing the bot's message.
+     * @param text Bot message text
+     * @param img  Bot avatar
+     * @return DialogBox aligned to the left with grey background
      */
     public static DialogBox getBotDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
-        db.setStyle("-fx-background-color: #e0e0e0; -fx-padding: 5; -fx-background-radius: 5;");
+        db.setStyle("-fx-background-color: #e0e0e0; -fx-padding: 8; -fx-background-radius: 8;");
+        db.setNodeOrientation(javafx.geometry.NodeOrientation.LEFT_TO_RIGHT);
         return db;
     }
 }
