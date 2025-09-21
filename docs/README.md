@@ -1,6 +1,6 @@
 # Bestbot User Guide
 
-![bestbot UI](docs/Ui.png)
+![bestbot UI](Ui.png)
 
 Bestbot is a personal assistant chatbot inspired by *Duke*.  
 It helps you keep track of tasks such as **todos, deadlines, and events**; you can mark/unmark, delete, find tasks, and it saves progress automatically.  
