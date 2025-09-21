@@ -100,7 +100,7 @@ Here is your sorted task list:
 
 ---
 
-### 5. Marking a task as done
+### 6. Marking a task as done
 Marks a task in the list as completed.
 
 **Command Format**
@@ -117,7 +117,7 @@ Nice! I've marked this task as done:
 
 ---
 
-### 6. Marking a task as not done
+### 7. Marking a task as not done
 Marks a previously completed task as not done.
 
 **Command Format**
@@ -134,7 +134,7 @@ OK, I've marked this task as not done yet:
 
 ---
 
-### 7. Deleting a task
+### 8. Deleting a task
 Removes a task from the list.
 
 **Command Format**
@@ -152,7 +152,7 @@ Now you have 4 tasks in the list.
 
 ---
 
-### 8. Finding tasks
+### 9. Finding tasks
 Searches tasks whose descriptions contain a given keyword.
 
 **Command Format**

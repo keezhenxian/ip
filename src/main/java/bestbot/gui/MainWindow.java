@@ -1,11 +1,14 @@
 package bestbot.gui;
 
-import bestbot.Bestbot;
+import bestbot.Bestbot; // your current Bestbot location
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 /**
  * MainWindow: Controller for MainWindow.fxml.
@@ -53,14 +56,19 @@ public class MainWindow {
      * Handles user input: creates dialog boxes for user and bot,
      * adds them to the dialog container, and clears the input field.
      *
-     * ⚡ Also ensures both pressing Enter and Send button triggers the same behavior.
+     * ⚡ Closes application if user types "bye", after a short delay.
      */
     @FXML
     public void handleUserInput() {
         String input = userInput.getText();
         if (input.isBlank()) return;
 
-        String response = bestbot.getResponse(input);
+        String response;
+        if (input.trim().equalsIgnoreCase("bye")) {
+            response = "Bye. Hope to see you again soon!";
+        } else {
+            response = bestbot.getResponse(input);
+        }
 
         // Add dialog boxes to ListView
         dialogContainer.getItems().addAll(
@@ -69,6 +77,12 @@ public class MainWindow {
         );
 
         userInput.clear();
+
+        // Exit if "bye"
+        if (input.trim().equalsIgnoreCase("bye")) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
     }
 }
-
