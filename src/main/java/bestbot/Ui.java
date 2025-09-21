@@ -71,9 +71,18 @@ public class Ui {
      *
      * @param tasks The list of tasks to display.
      */
+    /**
+     * Displays all tasks currently in the list.
+     *
+     * @param tasks The list of tasks to display.
+     */
     public void showTasks(List<Task> tasks) {
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
+        if (tasks.isEmpty()) {
+            out.println("Your task list is empty.");
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                out.println((i + 1) + "." + tasks.get(i));
+            }
         }
     }
 
@@ -125,5 +134,18 @@ public class Ui {
                 out.printf("%d.%s%n", i + 1, tasks.get(i));
             }
         }
+    }
+
+    /**
+     * Prints a plain message to the output stream without any formatting.
+     *
+     * <p>This is useful for displaying simple information such as
+     * command headers (e.g., "Here are the tasks in your list:")
+     * or feedback messages that are not task-related.</p>
+     *
+     * @param message The message to display. Must not be {@code null}.
+     */
+    public void showMessage(String message) {
+        out.println(message);
     }
 }

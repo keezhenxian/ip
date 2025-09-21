@@ -50,12 +50,8 @@ public class SortCommand extends Command {
         };
 
         Collections.sort(list, comparator);
-
-        // Persist the new order
         storage.save(tasks.getTasks());
-
-        // Only print the sorted message and tasks, no extra lines
-        System.out.println("Here is your sorted task list:");
+        ui.showMessage("Here is your sorted task list:");
         ui.showTasks(tasks.getTasks());
     }
 
